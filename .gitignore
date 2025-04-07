@@ -1,0 +1,15 @@
+node_modules
+dist
+coverage
+*.log
+*.lock
+*.env
+*.local
+*.iml
+.idea
+*.ipr
+*.iws
+*.swp
+*.swo
+*.swn
+*.swo
