@@ -6,7 +6,6 @@ const logger = require('../utils/logger.js');
 const {createNewNightSleepLog} = require("../service/sleeplogservice");
 
 router.get('/', (req, res) => {
-    // This is a placeholder route for the logs
     logger.info('GET / accessed');
     res.send('Hello from logs route');
 })
