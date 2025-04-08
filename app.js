@@ -20,3 +20,5 @@ sequelize.sync().then(() => {
     })
     console.log('✅ Database synchronized');
 })
+
+module.exports = app;

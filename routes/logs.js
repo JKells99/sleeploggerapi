@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
 
 router.post('/night', async (req, res) => {
     const date = getTodaysDate();
-    console.log(date);
     const {night_mood, night_anxiety} = req.body;
 
     try{
@@ -26,7 +25,6 @@ router.post('/night', async (req, res) => {
         return res.status(201).json({message: "Log created successfully", log});
     }catch(err){
         logger.error(err);
-        console.error(err);
         return res.status(500).json({message: "Internal server error"});
     }
 
