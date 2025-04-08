@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize');
-const sequelize = require('../db/index.js');
+const sequelize = require('../db');
 
 const SleepLog = sequelize.define('SleepLog', {
     log_date: {

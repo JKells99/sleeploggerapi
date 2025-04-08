@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
-const limiter = require('./utils/ratelimiter.js');
+const limiter = require('./src/utils/ratelimiter.js');
 
-const sleepLogRoutes = require('./routes/logs.js');
-const sequelize = require('./db/index.js');
+const sleepLogRoutes = require('./src/routes/logs.js');
+const sequelize = require('./src/db/index.js');
 require('dotenv').config();
 
 app.use(cors());
