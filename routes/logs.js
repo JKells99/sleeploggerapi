@@ -3,7 +3,7 @@ const router = express.Router();
 const SleepLog = require('../models/SleepLog.js');
 const {getYesterdayDate, getTodaysDate} = require("../utils/datefunctions");
 const logger = require('../utils/logger.js');
-const {createNewNightSleepLog} = require("../service/sleeplogservice");
+const {createNewNightSleepLog, createMorningLog} = require("../service/sleeplogservice");
 
 router.get('/', (req, res) => {
     logger.info('GET / accessed');
@@ -37,20 +37,20 @@ router.post('/morning', async (req, res) =>{
     const {morning_mood,sleepquality, morning_anxiety} = req.body;
 
     try{
-        const log = await SleepLog.findOne({where: {log_date: date}});
+        const log = await createMorningLog(date,morning_mood, morning_anxiety,sleepquality);
         if(!log){
             logger.warn("No log found for yesterday", {log_date: date});
             return res.status(404).json({message: "No log found for yesterday"});
         }
-        log.morning_mood = morning_mood;
-        log.morning_anxiety = morning_anxiety;
-        log.sleepquality = sleepquality;
-        await log.save();
-        logger.info("Morning log updated", {log_date: date, morning_mood, morning_anxiety});
-        return res.status(200).json({message: "Log updated successfully", log});
+        if(log.morning_mood===(morning_mood) || log.sleepquality===(sleepquality) || log.morning_anxiety===(morning_anxiety)){
+            logger.warn("Log already exists for yesterday", {log_date: date, morning_mood, morning_anxiety,sleepquality});
+            return res.status(409).json({message: "Log Is Not Updated!"});
+
+        }
+        logger.info("Morning log created", {log_date: date, morning_mood, morning_anxiety,sleepquality});
+        return res.status(201).json({message: "Log created successfully", log});
     }catch(err){
         logger.error(err);
-        console.error(err);
         return res.status(500).json({message: "Internal server error"});
     }
 })
